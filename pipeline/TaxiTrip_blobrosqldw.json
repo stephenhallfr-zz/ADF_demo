@@ -29,13 +29,8 @@
 					},
 					"sink": {
 						"type": "SqlDWSink",
-						"allowPolyBase": true,
-						"writeBatchSize": 100000,
-						"polyBaseSettings": {
-							"rejectValue": 0,
-							"rejectType": "value",
-							"useTypeDefault": true
-						}
+						"allowPolyBase": false,
+						"writeBatchSize": 100000
 					},
 					"enableStaging": false,
 					"parallelCopies": 16,
