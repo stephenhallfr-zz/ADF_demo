@@ -1,0 +1,839 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name",
+			"defaultValue": "ADFAIworkshop"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/TaxiTrip_blobrosqldw')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_0dr",
+						"type": "Copy",
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "data/trip_sample/"
+							},
+							{
+								"name": "Destination",
+								"value": "[concat('[', 'dbo].[taxitrip]')]"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "BlobSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"allowPolyBase": false,
+								"writeBatchSize": 100000
+							},
+							"enableStaging": false,
+							"enableSkipIncompatibleRow": true,
+							"redirectIncompatibleRowSettings": {
+								"linkedServiceName": {
+									"referenceName": "AzureBlobStorage1",
+									"type": "LinkedServiceReference"
+								},
+								"path": "data/New_Look"
+							},
+							"dataIntegrationUnits": 0,
+							"translator": {
+								"type": "TabularTranslator",
+								"columnMappings": {
+									"Prop_0": "medallion",
+									"Prop_1": "hack_license",
+									"Prop_2": "vendor_id",
+									"Prop_3": "rate_code",
+									"Prop_4": "store_and_fwd_flag",
+									"Prop_5": "pickup_datetime",
+									"Prop_6": "dropoff_datetime",
+									"Prop_7": "passenger_count",
+									"Prop_8": "trip_time_in_secs",
+									"Prop_9": "trip_distance",
+									"Prop_10": "pickup_longitude",
+									"Prop_11": "pickup_latitude",
+									"Prop_12": "dropoff_longitude",
+									"Prop_13": "dropoff_latitude"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_0dr",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_0dr",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_0dr')]",
+				"[concat(variables('factoryId'), '/datasets/DestinationDataset_0dr')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/flight_copy_blob_sqldw')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_q1t",
+						"type": "Copy",
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "data/flight_sample/"
+							},
+							{
+								"name": "Destination",
+								"value": "[concat('[', 'dbo].[flights]')]"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "BlobSource",
+								"recursive": false
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"allowPolyBase": false,
+								"writeBatchSize": 10000
+							},
+							"enableStaging": false,
+							"dataIntegrationUnits": 0,
+							"translator": {
+								"type": "TabularTranslator",
+								"columnMappings": {
+									"Prop_0": "YEAR",
+									"Prop_1": "MONTH",
+									"Prop_2": "DAY_OF_MONTH",
+									"Prop_3": "DAY_OF_WEEK",
+									"Prop_4": "AIRLINE_ID",
+									"Prop_5": "CARRIER",
+									"Prop_6": "TAIL_NUM",
+									"Prop_7": "FL_NUM",
+									"Prop_8": "ORIGIN",
+									"Prop_9": "DEST",
+									"Prop_10": "CRS_DEP_TIME",
+									"Prop_11": "DEP_TIME",
+									"Prop_12": "DEP_DELAY",
+									"Prop_13": "TAXI_OUT",
+									"Prop_14": "WHEELS_OFF",
+									"Prop_15": "ARR_TIME",
+									"Prop_16": "ARR_DELAY",
+									"Prop_17": "CANCELLED",
+									"Prop_18": "CANCELLATION_CODE",
+									"Prop_19": "DIVERTED",
+									"Prop_20": "CRS_ELAPSED_TIME",
+									"Prop_21": "ACTUAL_ELAPSED_TIME",
+									"Prop_22": "AIR_TIME",
+									"Prop_23": "DISTANCE",
+									"Prop_24": "CARRIER_DELAY",
+									"Prop_25": "WEATHER_DELAY",
+									"Prop_26": "NAS_DELAY",
+									"Prop_27": "SECURITY_DELAY",
+									"Prop_28": "LATE_AIRCRAFT_DELAY"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_q1t",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_q1t",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_q1t')]",
+				"[concat(variables('factoryId'), '/datasets/DestinationDataset_q1t')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/taxi_fare_blob_tosqldw')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Get data taxi_fare from a blob storage to SQL DW for AI workshop",
+				"activities": [
+					{
+						"name": "Copy_3re",
+						"type": "Copy",
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "data/fare_sample/"
+							},
+							{
+								"name": "Destination",
+								"value": "[concat('[', 'dbo].[taxifare]')]"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "BlobSource",
+								"recursive": true
+							},
+							"sink": {
+								"type": "SqlDWSink",
+								"allowPolyBase": false,
+								"writeBatchSize": 100000
+							},
+							"enableStaging": false,
+							"dataIntegrationUnits": 0,
+							"translator": {
+								"type": "TabularTranslator",
+								"columnMappings": {
+									"Prop_0": "medallion",
+									"Prop_1": "hack_license",
+									"Prop_2": "vendor_id",
+									"Prop_3": "pickup_datetime",
+									"Prop_4": "payment_type",
+									"Prop_5": "fare_amount",
+									"Prop_6": "surcharge",
+									"Prop_7": "mta_tax",
+									"Prop_8": "tip_amount",
+									"Prop_9": "tolls_amount",
+									"Prop_10": "total_amount"
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_3re",
+								"type": "DatasetReference"
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_3re",
+								"type": "DatasetReference"
+							}
+						]
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_3re')]",
+				"[concat(variables('factoryId'), '/datasets/DestinationDataset_3re')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DestinationDataset_0dr')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDWAIworkshop",
+					"type": "LinkedServiceReference"
+				},
+				"type": "AzureSqlDWTable",
+				"structure": [
+					{
+						"name": "medallion",
+						"type": "String"
+					},
+					{
+						"name": "hack_license",
+						"type": "String"
+					},
+					{
+						"name": "vendor_id",
+						"type": "String"
+					},
+					{
+						"name": "rate_code",
+						"type": "Int32"
+					},
+					{
+						"name": "store_and_fwd_flag",
+						"type": "String"
+					},
+					{
+						"name": "pickup_datetime",
+						"type": "DateTime"
+					},
+					{
+						"name": "dropoff_datetime",
+						"type": "DateTime"
+					},
+					{
+						"name": "passenger_count",
+						"type": "Int32"
+					},
+					{
+						"name": "trip_time_in_secs",
+						"type": "Int32"
+					},
+					{
+						"name": "trip_distance",
+						"type": "Double"
+					},
+					{
+						"name": "pickup_longitude",
+						"type": "Double"
+					},
+					{
+						"name": "pickup_latitude",
+						"type": "Double"
+					},
+					{
+						"name": "dropoff_longitude",
+						"type": "Double"
+					},
+					{
+						"name": "dropoff_latitude",
+						"type": "Double"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[concat('[', 'dbo].[taxitrip]')]"
+				}
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DestinationDataset_3re')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDWAIworkshop",
+					"type": "LinkedServiceReference"
+				},
+				"type": "AzureSqlDWTable",
+				"structure": [
+					{
+						"name": "medallion",
+						"type": "String"
+					},
+					{
+						"name": "hack_license",
+						"type": "String"
+					},
+					{
+						"name": "vendor_id",
+						"type": "String"
+					},
+					{
+						"name": "pickup_datetime",
+						"type": "DateTime"
+					},
+					{
+						"name": "payment_type",
+						"type": "String"
+					},
+					{
+						"name": "fare_amount",
+						"type": "Double"
+					},
+					{
+						"name": "surcharge",
+						"type": "Double"
+					},
+					{
+						"name": "mta_tax",
+						"type": "Double"
+					},
+					{
+						"name": "tip_amount",
+						"type": "Double"
+					},
+					{
+						"name": "tolls_amount",
+						"type": "Double"
+					},
+					{
+						"name": "total_amount",
+						"type": "Double"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[concat('[', 'dbo].[taxifare]')]"
+				}
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DestinationDataset_q1t')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDWAIworkshop",
+					"type": "LinkedServiceReference"
+				},
+				"type": "AzureSqlDWTable",
+				"structure": [
+					{
+						"name": "YEAR",
+						"type": "Int32"
+					},
+					{
+						"name": "MONTH",
+						"type": "Int32"
+					},
+					{
+						"name": "DAY_OF_MONTH",
+						"type": "Int32"
+					},
+					{
+						"name": "DAY_OF_WEEK",
+						"type": "Int32"
+					},
+					{
+						"name": "AIRLINE_ID",
+						"type": "Int32"
+					},
+					{
+						"name": "CARRIER",
+						"type": "String"
+					},
+					{
+						"name": "TAIL_NUM",
+						"type": "String"
+					},
+					{
+						"name": "FL_NUM",
+						"type": "Int32"
+					},
+					{
+						"name": "ORIGIN",
+						"type": "String"
+					},
+					{
+						"name": "DEST",
+						"type": "String"
+					},
+					{
+						"name": "CRS_DEP_TIME",
+						"type": "Int32"
+					},
+					{
+						"name": "DEP_TIME",
+						"type": "Int32"
+					},
+					{
+						"name": "DEP_DELAY",
+						"type": "Int32"
+					},
+					{
+						"name": "TAXI_OUT",
+						"type": "Int32"
+					},
+					{
+						"name": "WHEELS_OFF",
+						"type": "Int32"
+					},
+					{
+						"name": "ARR_TIME",
+						"type": "Int32"
+					},
+					{
+						"name": "ARR_DELAY",
+						"type": "Int32"
+					},
+					{
+						"name": "CANCELLED",
+						"type": "Int32"
+					},
+					{
+						"name": "CANCELLATION_CODE",
+						"type": "String"
+					},
+					{
+						"name": "DIVERTED",
+						"type": "Int32"
+					},
+					{
+						"name": "CRS_ELAPSED_TIME",
+						"type": "Int32"
+					},
+					{
+						"name": "ACTUAL_ELAPSED_TIME",
+						"type": "Int32"
+					},
+					{
+						"name": "AIR_TIME",
+						"type": "Int32"
+					},
+					{
+						"name": "DISTANCE",
+						"type": "Int32"
+					},
+					{
+						"name": "CARRIER_DELAY",
+						"type": "Int32"
+					},
+					{
+						"name": "WEATHER_DELAY",
+						"type": "Int32"
+					},
+					{
+						"name": "NAS_DELAY",
+						"type": "Int32"
+					},
+					{
+						"name": "SECURITY_DELAY",
+						"type": "Int32"
+					},
+					{
+						"name": "LATE_AIRCRAFT_DELAY",
+						"type": "Int32"
+					}
+				],
+				"typeProperties": {
+					"tableName": "[concat('[', 'dbo].[flights]')]"
+				}
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_0dr')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"type": "AzureBlob",
+				"structure": [
+					{
+						"name": "Prop_0",
+						"type": "String"
+					},
+					{
+						"name": "Prop_1",
+						"type": "String"
+					},
+					{
+						"name": "Prop_2",
+						"type": "String"
+					},
+					{
+						"name": "Prop_3",
+						"type": "String"
+					},
+					{
+						"name": "Prop_4",
+						"type": "String"
+					},
+					{
+						"name": "Prop_5",
+						"type": "String"
+					},
+					{
+						"name": "Prop_6",
+						"type": "String"
+					},
+					{
+						"name": "Prop_7",
+						"type": "String"
+					},
+					{
+						"name": "Prop_8",
+						"type": "String"
+					},
+					{
+						"name": "Prop_9",
+						"type": "String"
+					},
+					{
+						"name": "Prop_10",
+						"type": "String"
+					},
+					{
+						"name": "Prop_11",
+						"type": "String"
+					},
+					{
+						"name": "Prop_12",
+						"type": "String"
+					},
+					{
+						"name": "Prop_13",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"quoteChar": "\"",
+						"nullValue": "\\N",
+						"encodingName": null,
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": false
+					},
+					"fileName": "",
+					"folderPath": "data/trip_sample"
+				}
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_3re')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"type": "AzureBlob",
+				"structure": [
+					{
+						"name": "Prop_0",
+						"type": "String"
+					},
+					{
+						"name": "Prop_1",
+						"type": "String"
+					},
+					{
+						"name": "Prop_2",
+						"type": "String"
+					},
+					{
+						"name": "Prop_3",
+						"type": "String"
+					},
+					{
+						"name": "Prop_4",
+						"type": "String"
+					},
+					{
+						"name": "Prop_5",
+						"type": "String"
+					},
+					{
+						"name": "Prop_6",
+						"type": "String"
+					},
+					{
+						"name": "Prop_7",
+						"type": "String"
+					},
+					{
+						"name": "Prop_8",
+						"type": "String"
+					},
+					{
+						"name": "Prop_9",
+						"type": "String"
+					},
+					{
+						"name": "Prop_10",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"nullValue": "\\N",
+						"encodingName": null,
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": false
+					},
+					"fileName": "",
+					"folderPath": "data/fare_sample"
+				}
+			}
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_q1t')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"type": "AzureBlob",
+				"structure": [
+					{
+						"name": "Prop_0",
+						"type": "String"
+					},
+					{
+						"name": "Prop_1",
+						"type": "String"
+					},
+					{
+						"name": "Prop_2",
+						"type": "String"
+					},
+					{
+						"name": "Prop_3",
+						"type": "String"
+					},
+					{
+						"name": "Prop_4",
+						"type": "String"
+					},
+					{
+						"name": "Prop_5",
+						"type": "String"
+					},
+					{
+						"name": "Prop_6",
+						"type": "String"
+					},
+					{
+						"name": "Prop_7",
+						"type": "String"
+					},
+					{
+						"name": "Prop_8",
+						"type": "String"
+					},
+					{
+						"name": "Prop_9",
+						"type": "String"
+					},
+					{
+						"name": "Prop_10",
+						"type": "String"
+					},
+					{
+						"name": "Prop_11",
+						"type": "String"
+					},
+					{
+						"name": "Prop_12",
+						"type": "String"
+					},
+					{
+						"name": "Prop_13",
+						"type": "String"
+					},
+					{
+						"name": "Prop_14",
+						"type": "String"
+					},
+					{
+						"name": "Prop_15",
+						"type": "String"
+					},
+					{
+						"name": "Prop_16",
+						"type": "String"
+					},
+					{
+						"name": "Prop_17",
+						"type": "String"
+					},
+					{
+						"name": "Prop_18",
+						"type": "String"
+					},
+					{
+						"name": "Prop_19",
+						"type": "String"
+					},
+					{
+						"name": "Prop_20",
+						"type": "String"
+					},
+					{
+						"name": "Prop_21",
+						"type": "String"
+					},
+					{
+						"name": "Prop_22",
+						"type": "String"
+					},
+					{
+						"name": "Prop_23",
+						"type": "String"
+					},
+					{
+						"name": "Prop_24",
+						"type": "String"
+					},
+					{
+						"name": "Prop_25",
+						"type": "String"
+					},
+					{
+						"name": "Prop_26",
+						"type": "String"
+					},
+					{
+						"name": "Prop_27",
+						"type": "String"
+					},
+					{
+						"name": "Prop_28",
+						"type": "String"
+					}
+				],
+				"typeProperties": {
+					"format": {
+						"type": "TextFormat",
+						"columnDelimiter": ",",
+						"rowDelimiter": "",
+						"nullValue": "\\N",
+						"encodingName": null,
+						"treatEmptyAsNull": true,
+						"skipLineCount": 0,
+						"firstRowAsHeader": false
+					},
+					"fileName": "",
+					"folderPath": "data/flight_sample"
+				}
+			}
+		}
+	]
+}

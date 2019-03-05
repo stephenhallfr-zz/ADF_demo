@@ -1,0 +1,98 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory Name",
+			"defaultValue": "ADFAIworkshop"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"AzureSqlDWAIworkshop_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDWAIworkshop'"
+		},
+		"SourceDataset_0dr_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"SourceDataset_0dr_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "data/trip_sample"
+		},
+		"SourceDataset_3re_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"SourceDataset_3re_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "data/fare_sample"
+		},
+		"SourceDataset_q1t_properties_typeProperties_fileName": {
+			"type": "string",
+			"defaultValue": ""
+		},
+		"SourceDataset_q1t_properties_typeProperties_folderPath": {
+			"type": "string",
+			"defaultValue": "data/flight_sample"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas Token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureBlobStorage1_connectionString": {
+						"value": "[parameters('AzureBlobStorage1_connectionString')]"
+					},
+					"AzureSqlDWAIworkshop_connectionString": {
+						"value": "[parameters('AzureSqlDWAIworkshop_connectionString')]"
+					},
+					"SourceDataset_0dr_properties_typeProperties_fileName": {
+						"value": "[parameters('SourceDataset_0dr_properties_typeProperties_fileName')]"
+					},
+					"SourceDataset_0dr_properties_typeProperties_folderPath": {
+						"value": "[parameters('SourceDataset_0dr_properties_typeProperties_folderPath')]"
+					},
+					"SourceDataset_3re_properties_typeProperties_fileName": {
+						"value": "[parameters('SourceDataset_3re_properties_typeProperties_fileName')]"
+					},
+					"SourceDataset_3re_properties_typeProperties_folderPath": {
+						"value": "[parameters('SourceDataset_3re_properties_typeProperties_folderPath')]"
+					},
+					"SourceDataset_q1t_properties_typeProperties_fileName": {
+						"value": "[parameters('SourceDataset_q1t_properties_typeProperties_fileName')]"
+					},
+					"SourceDataset_q1t_properties_typeProperties_folderPath": {
+						"value": "[parameters('SourceDataset_q1t_properties_typeProperties_folderPath')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

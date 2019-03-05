@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ADFAIworkshop"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDWAIworkshop_connectionString": {
+			"value": ""
+		},
+		"SourceDataset_0dr_properties_typeProperties_fileName": {
+			"value": ""
+		},
+		"SourceDataset_0dr_properties_typeProperties_folderPath": {
+			"value": "data/trip_sample"
+		},
+		"SourceDataset_3re_properties_typeProperties_fileName": {
+			"value": ""
+		},
+		"SourceDataset_3re_properties_typeProperties_folderPath": {
+			"value": "data/fare_sample"
+		},
+		"SourceDataset_q1t_properties_typeProperties_fileName": {
+			"value": ""
+		},
+		"SourceDataset_q1t_properties_typeProperties_folderPath": {
+			"value": "data/flight_sample"
+		}
+	}
+}
