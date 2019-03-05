@@ -1,0 +1,60 @@
+{
+	"name": "DestinationDataset_3re",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDWAIworkshop",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlDWTable",
+		"structure": [
+			{
+				"name": "medallion",
+				"type": "String"
+			},
+			{
+				"name": "hack_license",
+				"type": "String"
+			},
+			{
+				"name": "vendor_id",
+				"type": "String"
+			},
+			{
+				"name": "pickup_datetime",
+				"type": "DateTime"
+			},
+			{
+				"name": "payment_type",
+				"type": "String"
+			},
+			{
+				"name": "fare_amount",
+				"type": "Double"
+			},
+			{
+				"name": "surcharge",
+				"type": "Double"
+			},
+			{
+				"name": "mta_tax",
+				"type": "Double"
+			},
+			{
+				"name": "tip_amount",
+				"type": "Double"
+			},
+			{
+				"name": "tolls_amount",
+				"type": "Double"
+			},
+			{
+				"name": "total_amount",
+				"type": "Double"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[dbo].[taxifare]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

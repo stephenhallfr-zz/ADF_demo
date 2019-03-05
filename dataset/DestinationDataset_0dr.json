@@ -1,0 +1,72 @@
+{
+	"name": "DestinationDataset_0dr",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDWAIworkshop",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlDWTable",
+		"structure": [
+			{
+				"name": "medallion",
+				"type": "String"
+			},
+			{
+				"name": "hack_license",
+				"type": "String"
+			},
+			{
+				"name": "vendor_id",
+				"type": "String"
+			},
+			{
+				"name": "rate_code",
+				"type": "Int32"
+			},
+			{
+				"name": "store_and_fwd_flag",
+				"type": "String"
+			},
+			{
+				"name": "pickup_datetime",
+				"type": "DateTime"
+			},
+			{
+				"name": "dropoff_datetime",
+				"type": "DateTime"
+			},
+			{
+				"name": "passenger_count",
+				"type": "Int32"
+			},
+			{
+				"name": "trip_time_in_secs",
+				"type": "Int32"
+			},
+			{
+				"name": "trip_distance",
+				"type": "Double"
+			},
+			{
+				"name": "pickup_longitude",
+				"type": "Double"
+			},
+			{
+				"name": "pickup_latitude",
+				"type": "Double"
+			},
+			{
+				"name": "dropoff_longitude",
+				"type": "Double"
+			},
+			{
+				"name": "dropoff_latitude",
+				"type": "Double"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[dbo].[taxitrip]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

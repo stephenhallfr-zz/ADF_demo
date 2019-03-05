@@ -1,0 +1,81 @@
+{
+	"name": "TaxiTrip_blobrosqldw",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_0dr",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "data/trip_sample/"
+					},
+					{
+						"name": "Destination",
+						"value": "[dbo].[taxitrip]"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"allowPolyBase": false,
+						"writeBatchSize": 100000
+					},
+					"enableStaging": false,
+					"enableSkipIncompatibleRow": true,
+					"redirectIncompatibleRowSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureBlobStorage1",
+							"type": "LinkedServiceReference"
+						},
+						"path": "data/New_Look"
+					},
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"Prop_0": "medallion",
+							"Prop_1": "hack_license",
+							"Prop_2": "vendor_id",
+							"Prop_3": "rate_code",
+							"Prop_4": "store_and_fwd_flag",
+							"Prop_5": "pickup_datetime",
+							"Prop_6": "dropoff_datetime",
+							"Prop_7": "passenger_count",
+							"Prop_8": "trip_time_in_secs",
+							"Prop_9": "trip_distance",
+							"Prop_10": "pickup_longitude",
+							"Prop_11": "pickup_latitude",
+							"Prop_12": "dropoff_longitude",
+							"Prop_13": "dropoff_latitude"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_0dr",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_0dr",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

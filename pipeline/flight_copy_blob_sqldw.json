@@ -1,0 +1,88 @@
+{
+	"name": "flight_copy_blob_sqldw",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_q1t",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "data/flight_sample/"
+					},
+					{
+						"name": "Destination",
+						"value": "[dbo].[flights]"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"allowPolyBase": false,
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"Prop_0": "YEAR",
+							"Prop_1": "MONTH",
+							"Prop_2": "DAY_OF_MONTH",
+							"Prop_3": "DAY_OF_WEEK",
+							"Prop_4": "AIRLINE_ID",
+							"Prop_5": "CARRIER",
+							"Prop_6": "TAIL_NUM",
+							"Prop_7": "FL_NUM",
+							"Prop_8": "ORIGIN",
+							"Prop_9": "DEST",
+							"Prop_10": "CRS_DEP_TIME",
+							"Prop_11": "DEP_TIME",
+							"Prop_12": "DEP_DELAY",
+							"Prop_13": "TAXI_OUT",
+							"Prop_14": "WHEELS_OFF",
+							"Prop_15": "ARR_TIME",
+							"Prop_16": "ARR_DELAY",
+							"Prop_17": "CANCELLED",
+							"Prop_18": "CANCELLATION_CODE",
+							"Prop_19": "DIVERTED",
+							"Prop_20": "CRS_ELAPSED_TIME",
+							"Prop_21": "ACTUAL_ELAPSED_TIME",
+							"Prop_22": "AIR_TIME",
+							"Prop_23": "DISTANCE",
+							"Prop_24": "CARRIER_DELAY",
+							"Prop_25": "WEATHER_DELAY",
+							"Prop_26": "NAS_DELAY",
+							"Prop_27": "SECURITY_DELAY",
+							"Prop_28": "LATE_AIRCRAFT_DELAY"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_q1t",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_q1t",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

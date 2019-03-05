@@ -1,0 +1,132 @@
+{
+	"name": "DestinationDataset_q1t",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDWAIworkshop",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlDWTable",
+		"structure": [
+			{
+				"name": "YEAR",
+				"type": "Int32"
+			},
+			{
+				"name": "MONTH",
+				"type": "Int32"
+			},
+			{
+				"name": "DAY_OF_MONTH",
+				"type": "Int32"
+			},
+			{
+				"name": "DAY_OF_WEEK",
+				"type": "Int32"
+			},
+			{
+				"name": "AIRLINE_ID",
+				"type": "Int32"
+			},
+			{
+				"name": "CARRIER",
+				"type": "String"
+			},
+			{
+				"name": "TAIL_NUM",
+				"type": "String"
+			},
+			{
+				"name": "FL_NUM",
+				"type": "Int32"
+			},
+			{
+				"name": "ORIGIN",
+				"type": "String"
+			},
+			{
+				"name": "DEST",
+				"type": "String"
+			},
+			{
+				"name": "CRS_DEP_TIME",
+				"type": "Int32"
+			},
+			{
+				"name": "DEP_TIME",
+				"type": "Int32"
+			},
+			{
+				"name": "DEP_DELAY",
+				"type": "Int32"
+			},
+			{
+				"name": "TAXI_OUT",
+				"type": "Int32"
+			},
+			{
+				"name": "WHEELS_OFF",
+				"type": "Int32"
+			},
+			{
+				"name": "ARR_TIME",
+				"type": "Int32"
+			},
+			{
+				"name": "ARR_DELAY",
+				"type": "Int32"
+			},
+			{
+				"name": "CANCELLED",
+				"type": "Int32"
+			},
+			{
+				"name": "CANCELLATION_CODE",
+				"type": "String"
+			},
+			{
+				"name": "DIVERTED",
+				"type": "Int32"
+			},
+			{
+				"name": "CRS_ELAPSED_TIME",
+				"type": "Int32"
+			},
+			{
+				"name": "ACTUAL_ELAPSED_TIME",
+				"type": "Int32"
+			},
+			{
+				"name": "AIR_TIME",
+				"type": "Int32"
+			},
+			{
+				"name": "DISTANCE",
+				"type": "Int32"
+			},
+			{
+				"name": "CARRIER_DELAY",
+				"type": "Int32"
+			},
+			{
+				"name": "WEATHER_DELAY",
+				"type": "Int32"
+			},
+			{
+				"name": "NAS_DELAY",
+				"type": "Int32"
+			},
+			{
+				"name": "SECURITY_DELAY",
+				"type": "Int32"
+			},
+			{
+				"name": "LATE_AIRCRAFT_DELAY",
+				"type": "Int32"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[dbo].[flights]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

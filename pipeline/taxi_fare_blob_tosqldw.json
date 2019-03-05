@@ -1,0 +1,71 @@
+{
+	"name": "taxi_fare_blob_tosqldw",
+	"properties": {
+		"description": "Get data taxi_fare from a blob storage to SQL DW for AI workshop",
+		"activities": [
+			{
+				"name": "Copy_3re",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "data/fare_sample/"
+					},
+					{
+						"name": "Destination",
+						"value": "[dbo].[taxifare]"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "BlobSource",
+						"recursive": false
+					},
+					"sink": {
+						"type": "SqlDWSink",
+						"allowPolyBase": false,
+						"writeBatchSize": 10000
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"Prop_0": "medallion",
+							"Prop_1": "hack_license",
+							"Prop_2": "vendor_id",
+							"Prop_3": "pickup_datetime",
+							"Prop_4": "payment_type",
+							"Prop_5": "fare_amount",
+							"Prop_6": "surcharge",
+							"Prop_7": "mta_tax",
+							"Prop_8": "tip_amount",
+							"Prop_9": "tolls_amount",
+							"Prop_10": "total_amount"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_3re",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_3re",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
