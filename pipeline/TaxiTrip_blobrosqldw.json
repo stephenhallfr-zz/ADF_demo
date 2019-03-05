@@ -29,10 +29,16 @@
 					},
 					"sink": {
 						"type": "SqlDWSink",
-						"allowPolyBase": false,
-						"writeBatchSize": 100000
+						"allowPolyBase": true,
+						"writeBatchSize": 100000,
+						"polyBaseSettings": {
+							"rejectValue": 0,
+							"rejectType": "value",
+							"useTypeDefault": true
+						}
 					},
 					"enableStaging": false,
+					"parallelCopies": 16,
 					"enableSkipIncompatibleRow": true,
 					"redirectIncompatibleRowSettings": {
 						"linkedServiceName": {
