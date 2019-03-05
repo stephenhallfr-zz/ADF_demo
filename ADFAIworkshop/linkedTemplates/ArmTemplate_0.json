@@ -700,6 +700,7 @@
 								"writeBatchSize": 100000
 							},
 							"enableStaging": false,
+							"parallelCopies": 16,
 							"enableSkipIncompatibleRow": true,
 							"redirectIncompatibleRowSettings": {
 								"linkedServiceName": {
