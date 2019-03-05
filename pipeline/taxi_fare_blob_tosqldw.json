@@ -26,12 +26,12 @@
 				"typeProperties": {
 					"source": {
 						"type": "BlobSource",
-						"recursive": false
+						"recursive": true
 					},
 					"sink": {
 						"type": "SqlDWSink",
 						"allowPolyBase": false,
-						"writeBatchSize": 10000
+						"writeBatchSize": 100000
 					},
 					"enableStaging": false,
 					"dataIntegrationUnits": 0,
