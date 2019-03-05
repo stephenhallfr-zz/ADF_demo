@@ -57,7 +57,7 @@
 				"type": "TextFormat",
 				"columnDelimiter": ",",
 				"rowDelimiter": "",
-				"nullValue": "\\N",
+				"nullValue": "\"\"",
 				"encodingName": null,
 				"treatEmptyAsNull": true,
 				"skipLineCount": 0,
