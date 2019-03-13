@@ -11,6 +11,12 @@
 		"AzureSqlDWAIworkshop_connectionString": {
 			"value": ""
 		},
+		"AzureBlob1_properties_typeProperties_fileName": {
+			"value": ""
+		},
+		"AzureBlob1_properties_typeProperties_folderPath": {
+			"value": "data/trip_sample"
+		},
 		"SourceDataset_0dr_properties_typeProperties_fileName": {
 			"value": ""
 		},
