@@ -30,7 +30,7 @@
 					"sink": {
 						"type": "SqlDWSink",
 						"allowPolyBase": false,
-						"writeBatchSize": 1000000
+						"writeBatchSize": 1000
 					},
 					"enableStaging": false,
 					"parallelCopies": 16,
